@@ -36,10 +36,10 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto p-6"
+      className="max-w-4xl p-6 mx-auto"
     >
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+      <div className="p-8 bg-white shadow-lg dark:bg-gray-800 rounded-2xl">
+        <h2 className="flex items-center mb-6 text-3xl font-bold text-gray-800 dark:text-white">
           <SettingsIcon className="w-8 h-8 mr-3 text-green-600" />
           Настройки
         </h2>
@@ -47,11 +47,11 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
         <div className="space-y-8">
           {/* Translation Settings */}
           <div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+            <h3 className="flex items-center mb-4 text-xl font-semibold text-gray-800 dark:text-white">
               <Globe className="w-5 h-5 mr-2 text-green-600" />
               Перевод
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {translations.map((translation) => (
                 <motion.label
                   key={translation.id}
@@ -86,11 +86,11 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
 
           {/* Reciter Settings */}
           <div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+            <h3 className="flex items-center mb-4 text-xl font-semibold text-gray-800 dark:text-white">
               <Volume2 className="w-5 h-5 mr-2 text-green-600" />
               Чтец
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {reciters.map((reciter) => (
                 <motion.label
                   key={reciter.id}
@@ -120,7 +120,7 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
 
           {/* Font Size Settings */}
           <div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+            <h3 className="flex items-center mb-4 text-xl font-semibold text-gray-800 dark:text-white">
               <Type className="w-5 h-5 mr-2 text-green-600" />
               Размер шрифта
             </h3>
@@ -145,7 +145,7 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
 
           {/* Theme Settings */}
           <div>
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
+            <h3 className="flex items-center mb-4 text-xl font-semibold text-gray-800 dark:text-white">
               <Palette className="w-5 h-5 mr-2 text-green-600" />
               Тема
             </h3>
@@ -170,7 +170,7 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
         </div>
 
         {/* Reset Button */}
-        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600">
+        <div className="pt-6 mt-8 border-t border-gray-200 dark:border-gray-600">
           <motion.button
             onClick={() => {
               if (window.confirm('Сбросить все настройки к значениям по умолчанию?')) {
@@ -182,7 +182,7 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
                 });
               }
             }}
-            className="px-6 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+            className="px-6 py-3 text-red-600 transition-colors rounded-lg dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >

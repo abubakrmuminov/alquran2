@@ -20,11 +20,16 @@ export const SurahPage: React.FC<SurahPageProps> = ({
   const [surahData, setSurahData] = useState<any>(null);
   const [translationData, setTranslationData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>("bookmarks", []);
+  const [bookmarks, setBookmarks] = useLocalStorage<Bookmark[]>(
+    "bookmarks",
+    []
+  );
   const [, setLastRead] = useLocalStorage<LastRead | null>("lastRead", null);
 
   // 🎵 текущее воспроизведение
-  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(
+    null
+  );
   const [currentAyah, setCurrentAyah] = useState<number | null>(null);
 
   // Загружаем суру
@@ -156,60 +161,49 @@ export const SurahPage: React.FC<SurahPageProps> = ({
       className="max-w-4xl p-6 mx-auto"
     >
       {/* Header */}
-      <div className="p-6 mb-6 bg-white shadow-lg dark:bg-gray-800 rounded-2xl">
-        <div className="flex items-center justify-between">
-          <motion.button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-gray-600 transition-colors dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Назад к сурам</span>
-          </motion.button>
-
-          {currentAudio && (
-            <motion.button
-              onClick={stopAudio}
-              className="flex items-center px-3 py-2 space-x-2 text-red-600 transition-colors bg-red-100 rounded-lg dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span>⏹ Остановить всё</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="mt-4 text-center">
-          <h1 className="mb-2 text-3xl font-bold text-gray-800 dark:text-white">
+      <div className="max-w-4xl p-6 mx-auto">
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h1 className="mb-2 text-3xl font-bold text-white">
             {surahData.name}
           </h1>
-          <div className="text-lg text-gray-600 dark:text-gray-400">
-            {surahData.englishName} - {surahData.englishNameTranslation}
+          <div className="text-gray-400">
+            {surahData.englishName} — {surahData.englishNameTranslation}
           </div>
-          <div className="flex items-center justify-center mt-2 text-sm text-gray-600 dark:text-gray-400">
-            <Book className="w-4 h-4 mr-2" />
-            <span>{surahData.numberOfAyahs} аятов</span>
+          <div className="mt-2 text-sm text-gray-500">
+            {surahData.numberOfAyahs} аятов
           </div>
         </div>
-      </div>
 
-      {/* Все аяты */}
-      <div className="space-y-6">
-        {surahData.ayahs.map((ayah: any, index: number) => (
-          <AyahCard
-            key={ayah.number}
-            ayah={ayah}
-            translation={translationData.ayahs[index]}
-            surahNumber={surahNumber}
-            surahName={surahData.englishName}
-            settings={settings}
-            isBookmarked={isBookmarked(ayah.numberInSurah)}
-            onToggleBookmark={handleToggleBookmark}
-            currentAyah={currentAyah}
-            onPlay={() => playAyah(index)}
-          />
-        ))}
+        {/* Стоп-кнопка */}
+        {currentAudio && (
+          <div className="flex justify-center mb-6">
+            <button
+              onClick={stopAudio}
+              className="px-5 py-2 text-red-400 transition bg-red-600/20 rounded-xl hover:bg-red-600/30"
+            >
+              ⏹ Остановить всё
+            </button>
+          </div>
+        )}
+
+        {/* Все аяты */}
+        <div className="space-y-5">
+          {surahData.ayahs.map((ayah: any, index: number) => (
+            <AyahCard
+              key={ayah.number}
+              ayah={ayah}
+              translation={translationData.ayahs[index]}
+              surahNumber={surahNumber}
+              surahName={surahData.englishName}
+              settings={settings}
+              isBookmarked={isBookmarked(ayah.numberInSurah)}
+              onToggleBookmark={handleToggleBookmark}
+              currentAyah={currentAyah}
+              onPlay={() => playAyah(index)}
+            />
+          ))}
+        </div>
       </div>
     </motion.div>
   );

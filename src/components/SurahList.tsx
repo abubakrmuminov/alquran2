@@ -37,12 +37,12 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
   if (loading) {
     return (
       <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(12)].map((_, i) => (
-            <div key={i} className="bg-gray-800 rounded-xl p-6 animate-pulse">
-              <div className="h-6 bg-gray-700 rounded mb-3"></div>
-              <div className="h-4 bg-gray-700 rounded mb-2 w-3/4"></div>
-              <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+            <div key={i} className="p-6 bg-gray-800 rounded-xl animate-pulse">
+              <div className="h-6 mb-3 bg-gray-700 rounded"></div>
+              <div className="w-3/4 h-4 mb-2 bg-gray-700 rounded"></div>
+              <div className="w-1/2 h-4 bg-gray-700 rounded"></div>
             </div>
           ))}
         </div>
@@ -54,28 +54,28 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-white mb-4">
+        <h2 className="mb-4 text-3xl font-bold text-white">
           All Chapters
         </h2>
         
         <div className="relative max-w-md">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Search className="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
           <input
             type="text"
             placeholder="Search chapters..."
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            className="bg-gray-800 text-white placeholder-gray-400 pl-10 pr-4 py-3 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none w-full"
+            className="w-full py-3 pl-10 pr-4 text-white placeholder-gray-400 bg-gray-800 border border-gray-700 rounded-lg focus:border-blue-500 focus:outline-none"
           />
         </div>
         
-        <div className="text-gray-400 text-sm mt-2">
+        <div className="mt-2 text-sm text-gray-400">
           {filteredSurahs.length} chapters
         </div>
       </div>
 
       {/* Surahs Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredSurahs.map((surah, index) => (
           <motion.div
             key={surah.number}
@@ -83,16 +83,16 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
             onClick={() => onSurahSelect(surah.number)}
-            className="bg-gray-800 hover:bg-gray-750 rounded-xl cursor-pointer group transition-colors border border-gray-700 hover:border-gray-600"
+            className="transition-colors bg-gray-800 border border-gray-700 cursor-pointer hover:bg-gray-750 rounded-xl group hover:border-gray-600"
           >
             <div className="p-6">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">{surah.number}</span>
+                  <div className="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-full">
+                    <span className="font-bold text-white">{surah.number}</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white mb-1">
+                    <h3 className="mb-1 text-lg font-bold text-white">
                       {surah.name}
                     </h3>
                     <div className="text-sm text-gray-400">
@@ -105,7 +105,7 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
                 </div>
                 
                 <div className="text-right">
-                  <div className="text-xs text-gray-400 mb-1">
+                  <div className="mb-1 text-xs text-gray-400">
                     {surah.revelationType === 'Meccan' ? 'Medinan' : 'Medinan'}
                   </div>
                   <div className="text-sm text-gray-300">

@@ -25,12 +25,12 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <nav className="bg-gray-900 border-b border-gray-800">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-16">
+      <div className="px-6 mx-auto max-w-7xl">
+        <div className="flex items-center justify-between h-16">
           {/* Лого */}
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">Q</span>
+            <div className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-lg">
+              <span className="text-sm font-bold text-white">Q</span>
             </div>
             <h1 className="text-xl font-bold text-white">
               Quran Reader
@@ -38,7 +38,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
 
           {/* Десктопное меню */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="items-center hidden space-x-8 md:flex">
             {navItems.map((item) => {
               const isActive = currentPage === item.id;
 
@@ -61,7 +61,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
 
           {/* Desktop actions */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="items-center hidden space-x-4 md:flex">
             <button 
               onClick={onToggleTheme}
               className="p-2 text-gray-400 hover:text-white"
@@ -96,9 +96,9 @@ export const Navigation: React.FC<NavigationProps> = ({
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-gray-800 border-t border-gray-700"
+            className="bg-gray-800 border-t border-gray-700 md:hidden"
           >
-            <div className="flex flex-col space-y-4 p-4">
+            <div className="flex flex-col p-4 space-y-4">
               {navItems.map((item) => {
                 const isActive = currentPage === item.id;
 
