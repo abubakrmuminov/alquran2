@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bookmark } from 'lucide-react';
+import { Search, Bookmark, Star, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { quranApi } from '../api/quran';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -12,56 +12,113 @@ interface DashboardProps {
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, settings }) => {
+  const [lastRead] = useLocalStorage<LastRead | null>('lastRead', null);
+
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gray-900">
-      {/* Geometric Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute w-32 h-32 rotate-45 border border-gray-600 top-20 left-20"></div>
-        <div className="absolute w-24 h-24 border border-gray-600 top-40 right-32 rotate-12"></div>
-        <div className="absolute w-40 h-40 border border-gray-600 bottom-32 left-1/4 -rotate-12"></div>
-        <div className="absolute rotate-45 border border-gray-600 bottom-20 right-20 w-28 h-28"></div>
-        <div className="absolute w-64 h-64 transform -translate-x-1/2 -translate-y-1/2 border border-gray-600 top-1/2 left-1/2 rotate-12"></div>
+    <div className="min-h-screen pt-16">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute rounded-full w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl -top-48 -left-48 float"></div>
+        <div className="absolute rounded-full w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 blur-3xl top-1/3 -right-40 float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 blur-3xl bottom-1/4 left-1/4 float" style={{ animationDelay: '4s' }}></div>
       </div>
       
       {/* Hero Section */}
-      <div className="relative z-10 py-20 text-center">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
+      <div className="relative z-10 px-4 py-20 text-center sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6 text-6xl font-bold text-white"
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto"
         >
-          Quran Reader
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="max-w-3xl px-6 mx-auto mb-12 text-xl text-gray-300"
-        >
-          Read, listen, and reflect on the Holy Quran with beautiful modern design,
-          multiple translations, and high-quality audio recitations
-        </motion.p>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="flex justify-center space-x-4"
-        >
-          <button className="flex items-center px-6 py-3 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700">
-            <Search className="w-5 h-5" />
-            <span>Search Quran</span>
-          </button>
-          <button className="flex items-center px-6 py-3 space-x-2 text-white transition-colors bg-gray-800 rounded-lg hover:bg-gray-700">
-            <Bookmark className="w-5 h-5" />
-            <span>Bookmarks</span>
-          </button>
+          <motion.h1 
+            className="mb-6 text-5xl font-bold gradient-text sm:text-6xl lg:text-7xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            Quran Reader
+          </motion.h1>
+          
+          <motion.p 
+            className="max-w-2xl mx-auto mb-12 text-lg text-gray-300 sm:text-xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            Experience the Holy Quran with beautiful typography, multiple translations, 
+            and crystal-clear audio recitations in a modern, peaceful interface
+          </motion.p>
+          
+          {/* Action Buttons */}
+          <motion.div 
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <motion.button 
+              className="flex items-center px-8 py-4 space-x-3 text-white transition-all duration-300 rounded-2xl btn-primary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Search className="w-5 h-5" />
+              <span className="font-medium">Search Quran</span>
+            </motion.button>
+            
+            <motion.button 
+              className="flex items-center px-8 py-4 space-x-3 text-gray-300 transition-all duration-300 glass rounded-2xl hover:text-white hover:bg-white/10"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Bookmark className="w-5 h-5" />
+              <span className="font-medium">My Bookmarks</span>
+            </motion.button>
+          </motion.div>
+
+          {/* Last Read Section */}
+          {lastRead && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="max-w-md mx-auto mt-12"
+            >
+              <div className="p-6 glass rounded-2xl">
+                <div className="flex items-center mb-3 space-x-2">
+                  <Star className="w-5 h-5 text-yellow-400" />
+                  <span className="text-sm font-medium text-gray-300">Continue Reading</span>
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-white">
+                  {lastRead.surahName}
+                </h3>
+                <p className="mb-4 text-sm text-gray-400">
+                  Ayah {lastRead.ayahNumber}
+                </p>
+                <motion.button
+                  onClick={() => onNavigateToSurah(lastRead.surahNumber, lastRead.ayahNumber)}
+                  className="flex items-center justify-center w-full px-4 py-3 space-x-2 text-white transition-all duration-300 rounded-xl btn-primary"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span>Continue</span>
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       </div>
       
       {/* All Chapters Section */}
-      <div className="relative z-10 px-6 pb-20 mx-auto max-w-7xl">
-        <SurahList onSurahSelect={onNavigateToSurah} />
+      <div className="relative z-10 px-4 pb-20 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+        >
+          <SurahList onSurahSelect={onNavigateToSurah} />
+        </motion.div>
       </div>
     </div>
   );

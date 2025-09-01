@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowLeft, Book } from "lucide-react";
+import { ArrowLeft, StopCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { AyahCard } from "./AyahCard";
 import { quranApi } from "../api/quran";
@@ -26,7 +26,6 @@ export const SurahPage: React.FC<SurahPageProps> = ({
   );
   const [, setLastRead] = useLocalStorage<LastRead | null>("lastRead", null);
 
-  // 🎵 текущее воспроизведение
   const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(
     null
   );
@@ -103,7 +102,6 @@ export const SurahPage: React.FC<SurahPageProps> = ({
     }
   };
 
-  // 🛑 остановка всего
   const stopAudio = () => {
     if (currentAudio) {
       currentAudio.pause();
@@ -137,18 +135,22 @@ export const SurahPage: React.FC<SurahPageProps> = ({
     );
 
   if (loading) {
-    return <p className="p-6 text-center">Загрузка...</p>;
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-400">
+        Загрузка...
+      </div>
+    );
   }
 
   if (!surahData || !translationData) {
     return (
-      <div className="p-6 text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen">
         <p className="mb-4 text-red-500">Ошибка загрузки суры</p>
         <button
           onClick={onBack}
-          className="px-4 py-2 bg-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-300"
+          className="flex items-center px-4 py-2 text-gray-200 transition bg-gray-700 rounded-lg hover:bg-gray-600"
         >
-          Назад
+          <ArrowLeft className="w-4 h-4 mr-2" /> Назад
         </button>
       </div>
     );
@@ -156,54 +158,57 @@ export const SurahPage: React.FC<SurahPageProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="max-w-4xl p-6 mx-auto"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="max-w-3xl p-6 mx-auto"
     >
       {/* Header */}
-      <div className="max-w-4xl p-6 mx-auto">
-        {/* Header */}
-        <div className="mb-6 text-center">
-          <h1 className="mb-2 text-3xl font-bold text-white">
-            {surahData.name}
-          </h1>
-          <div className="text-gray-400">
-            {surahData.englishName} — {surahData.englishNameTranslation}
-          </div>
-          <div className="mt-2 text-sm text-gray-500">
-            {surahData.numberOfAyahs} аятов
-          </div>
+      <div className="mb-8 text-center">
+        <h1 className="mb-2 text-3xl font-bold text-white">
+          {surahData.name}
+        </h1>
+        <div className="text-gray-400">
+          {surahData.englishName} — {surahData.englishNameTranslation}
         </div>
+        <div className="mt-2 text-sm text-gray-500">
+          {surahData.numberOfAyahs} аятов
+        </div>
+      </div>
 
-        {/* Стоп-кнопка */}
+      {/* Кнопки */}
+      <div className="flex items-center justify-between mb-6">
+        <button
+          onClick={onBack}
+          className="flex items-center px-3 py-2 text-gray-300 transition bg-gray-800 rounded-lg hover:bg-gray-700"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" /> Назад
+        </button>
         {currentAudio && (
-          <div className="flex justify-center mb-6">
-            <button
-              onClick={stopAudio}
-              className="px-5 py-2 text-red-400 transition bg-red-600/20 rounded-xl hover:bg-red-600/30"
-            >
-              ⏹ Остановить всё
-            </button>
-          </div>
+          <button
+            onClick={stopAudio}
+            className="flex items-center px-3 py-2 text-red-400 transition rounded-lg bg-red-600/20 hover:bg-red-600/30"
+          >
+            <StopCircle className="w-4 h-4 mr-2" /> Остановить всё
+          </button>
         )}
+      </div>
 
-        {/* Все аяты */}
-        <div className="space-y-5">
-          {surahData.ayahs.map((ayah: any, index: number) => (
-            <AyahCard
-              key={ayah.number}
-              ayah={ayah}
-              translation={translationData.ayahs[index]}
-              surahNumber={surahNumber}
-              surahName={surahData.englishName}
-              settings={settings}
-              isBookmarked={isBookmarked(ayah.numberInSurah)}
-              onToggleBookmark={handleToggleBookmark}
-              currentAyah={currentAyah}
-              onPlay={() => playAyah(index)}
-            />
-          ))}
-        </div>
+      {/* Все аяты */}
+      <div className="space-y-5">
+        {surahData.ayahs.map((ayah: any, index: number) => (
+          <AyahCard
+            key={ayah.number}
+            ayah={ayah}
+            translation={translationData.ayahs[index]}
+            surahNumber={surahNumber}
+            surahName={surahData.englishName}
+            settings={settings}
+            isBookmarked={isBookmarked(ayah.numberInSurah)}
+            onToggleBookmark={handleToggleBookmark}
+            currentAyah={currentAyah}
+            onPlay={() => playAyah(index)}
+          />
+        ))}
       </div>
     </motion.div>
   );
