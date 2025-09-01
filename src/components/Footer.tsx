@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome }) => {
         {/* Social links */}
         <div className="flex items-center space-x-6">
           <motion.a
-            href="https://instagram.com/yourprofile"
+            href="https://instagram.com/secretly_ai"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white"
@@ -44,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome }) => {
           </motion.a>
 
           <motion.a
-            href="https://t.me/yourusername"
+            href="https://t.me/abubakr_ai"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white"
@@ -54,7 +54,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateHome }) => {
           </motion.a>
 
           <motion.a
-            href="https://t.me/yourchannel"
+            href="https://t.me/nur_al_mumin"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white"
