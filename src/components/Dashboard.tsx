@@ -51,7 +51,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
   <br />
   <span className="block mt-4 text-sm text-gray-400">
     Visit my Telegram channel to stay updated and receive daily inspiring posts: 
-    <a href="https://t.me/ТвойКанал" target="_blank" className="underline hover:text-white">t.me/ТвойКанал</a>
+    <a href="https://t.me/ТвойКанал" target="_blank" className="underline hover:text-white">t.me/nur_al_mumin</a>
   </span>
 </motion.p>
           
