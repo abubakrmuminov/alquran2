@@ -40,15 +40,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
             Quran Reader
           </motion.h1>
           
-          <motion.p 
-            className="max-w-2xl mx-auto mb-12 text-lg text-gray-300 sm:text-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            Experience the Holy Quran with beautiful typography, multiple translations, 
-            and crystal-clear audio recitations in a modern, peaceful interface
-          </motion.p>
+         <motion.p
+  className="max-w-2xl mx-auto mb-12 text-lg text-gray-300 sm:text-xl"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.4, duration: 0.8 }}
+>
+  Dive into the beauty of the Holy Quran — clear recitations, thoughtful translations, 
+  and a calm design that helps you connect with every verse.
+  <br />
+  <span className="block mt-4 text-sm text-gray-400">
+    Visit my Telegram channel to stay updated and receive daily inspiring posts: 
+    <a href="https://t.me/ТвойКанал" target="_blank" className="underline hover:text-white">t.me/ТвойКанал</a>
+  </span>
+</motion.p>
           
           {/* Action Buttons */}
           <motion.div 
