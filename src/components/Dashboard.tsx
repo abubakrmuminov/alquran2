@@ -49,10 +49,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
   Dive into the beauty of the Holy Quran — clear recitations, thoughtful translations, 
   and a calm design that helps you connect with every verse.
   <br />
-  <span className="block mt-4 text-sm text-gray-400">
-    Visit my Telegram channel to stay updated and receive daily inspiring posts: 
-    <a href="https://t.me/ТвойКанал" target="_blank" className="underline hover:text-white">t.me/nur_al_mumin</a>
-  </span>
+ <span className="block mt-4 text-sm">
+  Visit my Telegram{" "}
+  <a 
+    href="https://t.me/nur_al_mumin" 
+    target="_blank" 
+    className="font-medium text-blue-400 hover:text-blue-300 underline"
+  >
+    channel
+  </a>{" "}
+  to stay updated and receive daily inspiring posts.
+</span>
 </motion.p>
           
           {/* Action Buttons */}
