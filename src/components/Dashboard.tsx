@@ -31,14 +31,14 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <motion.h1 
-            className="mb-6 text-5xl font-bold gradient-text sm:text-6xl lg:text-7xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            Quran Reader
-          </motion.h1>
+         <motion.h1 
+  className="mb-6 text-5xl font-bold gradient-text sm:text-6xl lg:text-7xl"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.2, duration: 0.8 }}
+>
+  AlMumin <span className="text-gray-400">Quran Reader</span>
+</motion.h1>
           
          <motion.p
   className="max-w-2xl mx-auto mb-12 text-lg text-gray-300 sm:text-xl"
