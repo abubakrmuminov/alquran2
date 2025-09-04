@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Search, Bookmark, Star, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { quranApi } from '../api/quran';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { SurahList } from './SurahList';
 import type { LastRead, Settings } from '../types/quran';
@@ -9,9 +8,10 @@ import type { LastRead, Settings } from '../types/quran';
 interface DashboardProps {
   onNavigateToSurah: (surahNumber: number, ayahNumber?: number) => void;
   settings: Settings;
+  onPageChange: (page: string) => void; // добавлено
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, settings }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, settings, onPageChange }) => {
   const [lastRead] = useLocalStorage<LastRead | null>('lastRead', null);
 
   return (
@@ -22,7 +22,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
         <div className="absolute rounded-full w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 blur-3xl top-1/3 -right-40 float" style={{ animationDelay: '2s' }}></div>
         <div className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 blur-3xl bottom-1/4 left-1/4 float" style={{ animationDelay: '4s' }}></div>
       </div>
-      
+
       {/* Hero Section */}
       <div className="relative z-10 px-4 py-20 text-center sm:px-6 lg:px-8">
         <motion.div
@@ -31,37 +31,37 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-         <motion.h1 
-  className="mb-6 text-5xl font-bold gradient-text sm:text-6xl lg:text-7xl"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.2, duration: 0.8 }}
->
-  AlMumin <span className="text-gray-400">Quran Reader</span>
-</motion.h1>
-          
-         <motion.p
-  className="max-w-2xl mx-auto mb-12 text-lg text-gray-300 sm:text-xl"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.4, duration: 0.8 }}
->
-  Dive into the beauty of the Holy Quran — clear recitations, thoughtful translations, 
-  and a calm design that helps you connect with every verse.
-  <br />
- <span className="block mt-4 text-sm">
-  Visit my Telegram{" "}
-  <a 
-    href="https://t.me/nur_al_mumin" 
-    target="_blank" 
-    className="font-medium text-blue-400 hover:text-blue-300 underline"
-  >
-    channel
-  </a>{" "}
-  to stay updated and receive daily inspiring posts.
-</span>
-</motion.p>
-          
+          <motion.h1 
+            className="mb-6 text-5xl font-bold gradient-text sm:text-6xl lg:text-7xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            AlMumin <span className="text-gray-400">Quran Reader</span>
+          </motion.h1>
+
+          <motion.p
+            className="max-w-2xl mx-auto mb-12 text-lg text-gray-300 sm:text-xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            Dive into the beauty of the Holy Quran — clear recitations, thoughtful translations, 
+            and a calm design that helps you connect with every verse.
+            <br />
+            <span className="block mt-4 text-sm">
+              Visit my Telegram{" "}
+              <a 
+                href="https://t.me/nur_al_mumin" 
+                target="_blank" 
+                className="font-medium text-blue-400 hover:text-blue-300 underline"
+              >
+                channel
+              </a>{" "}
+              to stay updated and receive daily inspiring posts.
+            </span>
+          </motion.p>
+
           {/* Action Buttons */}
           <motion.div 
             className="flex flex-col items-center justify-center gap-4 sm:flex-row"
@@ -77,8 +77,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
               <Search className="w-5 h-5" />
               <span className="font-medium">Search Quran</span>
             </motion.button>
-            
+
             <motion.button 
+              onClick={() => onPageChange("bookmarks")} // логика перехода
               className="flex items-center px-8 py-4 space-x-3 text-gray-300 transition-all duration-300 glass rounded-2xl hover:text-white hover:bg-white/10"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -121,7 +122,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
           )}
         </motion.div>
       </div>
-      
+
       {/* All Chapters Section */}
       <div className="relative z-10 px-4 pb-20 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <motion.div
