@@ -22,6 +22,7 @@ export const Settings: React.FC<SettingsProps> = ({ settings, onSettingsChange }
     { id: 'en.sahih', name: 'Sahih International', language: 'English' },
     { id: 'ru.kuliev', name: 'Кулиев', language: 'Russian' },
     { id: 'ru.porokhova', name: 'Порохова', language: 'Russian' },
+ { id: 'uz.sodik', name: 'Мухаммад Содик Мухаммад Юсуф', language: 'Uzbek' },
   ];
 
   const reciters = [
