@@ -69,24 +69,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigateToSurah, setting
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <motion.button 
-              className="flex items-center px-8 py-4 space-x-3 text-white transition-all duration-300 rounded-2xl btn-primary"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Search className="w-5 h-5" />
-              <span className="font-medium">Search Quran</span>
-            </motion.button>
-
-            <motion.button 
-              onClick={() => onPageChange("bookmarks")} // логика перехода
-              className="flex items-center px-8 py-4 space-x-3 text-gray-300 transition-all duration-300 glass rounded-2xl hover:text-white hover:bg-white/10"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Bookmark className="w-5 h-5" />
-              <span className="font-medium">My Bookmarks</span>
-            </motion.button>
+            
           </motion.div>
 
           {/* Last Read Section */}
