@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, BookOpen, MapPin, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { quranApi } from '../api/quran';
+import { Pagination } from './Pagination';
 import type { Surah } from '../types/quran';
 
 interface SurahListProps {
@@ -12,6 +13,8 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
   const [surahs, setSurahs] = useState<Surah[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchFilter, setSearchFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const loadSurahs = async () => {
@@ -33,6 +36,17 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
     surah.englishNameTranslation.toLowerCase().includes(searchFilter.toLowerCase()) ||
     surah.number.toString().includes(searchFilter)
   );
+
+  // Reset to first page when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchFilter]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredSurahs.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentSurahs = filteredSurahs.slice(startIndex, endIndex);
 
   if (loading) {
     return (
@@ -88,13 +102,13 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
-          {filteredSurahs.length} chapters found
+          {filteredSurahs.length} chapters found • Page {currentPage} of {totalPages}
         </motion.div>
       </motion.div>
 
       {/* Surahs Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredSurahs.map((surah, index) => (
+        {currentSurahs.map((surah, index) => (
           <motion.div
             key={surah.number}
             initial={{ opacity: 0, y: 30 }}
@@ -159,8 +173,26 @@ export const SurahList: React.FC<SurahListProps> = ({ onSurahSelect }) => {
         ))}
       </div>
 
+      {/* Pagination */}
+      {filteredSurahs.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-12"
+        >
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={filteredSurahs.length}
+          />
+        </motion.div>
+      )}
+
       {/* Empty State */}
-      {filteredSurahs.length === 0 && !loading && (
+      {currentSurahs.length === 0 && !loading && filteredSurahs.length === 0 && (
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
