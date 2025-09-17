@@ -20,30 +20,30 @@ export const Pagination: React.FC<PaginationProps> = ({
   if (totalPages <= 1) return null;
 
   const getVisiblePages = () => {
-    const delta = 2;
-    const range = [];
-    const rangeWithDots = [];
+  const delta = window.innerWidth < 480 ? 1 : 2; // на мобилке меньше соседних
+  const range = [];
+  const rangeWithDots = [];
 
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i);
-    }
+  for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
+    range.push(i);
+  }
 
-    if (currentPage - delta > 2) {
-      rangeWithDots.push(1, '...');
-    } else {
-      rangeWithDots.push(1);
-    }
+  if (currentPage - delta > 2) {
+    rangeWithDots.push(1, '...');
+  } else {
+    rangeWithDots.push(1);
+  }
 
-    rangeWithDots.push(...range);
+  rangeWithDots.push(...range);
 
-    if (currentPage + delta < totalPages - 1) {
-      rangeWithDots.push('...', totalPages);
-    } else {
-      rangeWithDots.push(totalPages);
-    }
+  if (currentPage + delta < totalPages - 1) {
+    rangeWithDots.push('...', totalPages);
+  } else {
+    rangeWithDots.push(totalPages);
+  }
 
-    return rangeWithDots;
-  };
+  return rangeWithDots;
+};
 
   const visiblePages = getVisiblePages();
   const startItem = (currentPage - 1) * itemsPerPage + 1;
