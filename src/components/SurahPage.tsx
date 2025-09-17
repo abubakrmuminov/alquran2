@@ -65,14 +65,11 @@ export const SurahPage: React.FC<SurahPageProps> = ({
 
   // Останавливаем аудио при выходе со страницы
   useEffect(() => {
-    return () => {
-      if (currentAudio) {
-        currentAudio.pause();
-        setCurrentAudio(null);
-        setCurrentAyah(null);
-      }
+    return () => stopAudio();
+      
+      
     };
-  }, [currentAudio]);
+  }, []);
 
   // Воспроизведение аята с автоплеем
   const playAyah = async (ayahIndex: number) => {
