@@ -63,7 +63,18 @@ export const SurahPage: React.FC<SurahPageProps> = ({
     }
   }, [surahData, surahNumber, setLastRead]);
 
-  // ⭐ воспроизведение аята с автоплеем
+  // Останавливаем аудио при выходе со страницы
+  useEffect(() => {
+    return () => {
+      if (currentAudio) {
+        currentAudio.pause();
+        setCurrentAudio(null);
+        setCurrentAyah(null);
+      }
+    };
+  }, [currentAudio]);
+
+  // Воспроизведение аята с автоплеем
   const playAyah = async (ayahIndex: number) => {
     try {
       if (currentAudio) {
@@ -81,7 +92,7 @@ export const SurahPage: React.FC<SurahPageProps> = ({
       if (audioData.audio) {
         const audio = new Audio(audioData.audio);
         setCurrentAudio(audio);
-        setCurrentAyah(ayah.number);
+        setCurrentAyah(ayah.numberInSurah);
 
         audio.onended = () => {
           const nextIndex = ayahIndex + 1;
@@ -195,20 +206,26 @@ export const SurahPage: React.FC<SurahPageProps> = ({
 
       {/* Все аяты */}
       <div className="space-y-5">
-        {surahData.ayahs.map((ayah: any, index: number) => (
-          <AyahCard
-            key={ayah.number}
-            ayah={ayah}
-            translation={translationData.ayahs[index]}
-            surahNumber={surahNumber}
-            surahName={surahData.englishName}
-            settings={settings}
-            isBookmarked={isBookmarked(ayah.numberInSurah)}
-            onToggleBookmark={handleToggleBookmark}
-            currentAyah={currentAyah}
-            onPlay={() => playAyah(index)}
-          />
-        ))}
+        {surahData.ayahs.map((ayah: any, index: number) => {
+          // Проверяем Бисмиллях
+          const isBismillah = ayah.text.includes("بسم الله");
+          const ayahNumber = isBismillah ? 0 : ayah.numberInSurah;
+
+          return (
+            <AyahCard
+              key={ayah.number}
+              ayah={{ ...ayah, numberInSurah: ayahNumber }}
+              translation={translationData.ayahs[index]}
+              surahNumber={surahNumber}
+              surahName={surahData.englishName}
+              settings={settings}
+              isBookmarked={isBookmarked(ayahNumber)}
+              onToggleBookmark={handleToggleBookmark}
+              currentAyah={currentAyah}
+              onPlay={() => playAyah(index)}
+            />
+          );
+        })}
       </div>
     </motion.div>
   );
